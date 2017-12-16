@@ -103,70 +103,73 @@
 
     <!-- <script src="something.js"></script> -->
     <script src="https://www.gstatic.com/firebasejs/4.8.0/firebase.js"></script>
-    <script>
 
+  <script>
     var config = {
-        apiKey: "AIzaSyCXsIdnd1ZMI1Sa6mcnrUES8VI8MPuQ-60",
-        authDomain: "employee-dat.firebaseapp.com",
-        databaseURL: "https://employee-dat.firebaseio.com",
-        projectId: "employee-dat",
-        storageBucket: "",
-        messagingSenderId: "985427366751"
-        };
-      firebase.initializeApp(config);
+    apiKey: "AIzaSyCXsIdnd1ZMI1Sa6mcnrUES8VI8MPuQ-60",
+    authDomain: "employee-dat.firebaseapp.com",
+    databaseURL: "https://employee-dat.firebaseio.com",
+    projectId: "employee-dat",
+    storageBucket: "",
+    messagingSenderId: "985427366751"
+  };
+  firebase.initializeApp(config);
 
-      <script src="https://code.jquery.com/jquery-2.2.1.min.js"></script>
-      <script type="text/javascript">
-        var list = JSON.parse(localStorage.getItem("todolist"));
+    var database = firebase.database();
 
-        if (!Array.isArray(list)) {
-          list = [];
-        }
+    $("#add-employee-btn").on("click", function(){
+      event.preventDefault();
 
-        function putOnPage() {
-
-          $("#todo-list").empty();
-
-          var insideList = JSON.parse(localStorage.getItem("todolist"));
-
-          if (!Array.isArray(insideList)) {
-            insideList = [];
-          }
-
-          for (var i = 0; i < insideList.length; i++) {
-            var p = $("<p>").text(insideList[i]);
-            var b = $("<button class='delete'>").text("x").attr("data-index", i);
-            p.prepend(b);
-            $("#todo-list").prepend(p);
-          }
-        }
-
-        putOnPage();
-
-        $(document).on("click", "button.delete", function() {
-          var todolist = JSON.parse(localStorage.getItem("todolist"));
-          var currentIndex = $(this).attr("data-index");
-
-          todolist.splice(currentIndex, 1);
-          list = todolist;
-
-          localStorage.setItem("todolist", JSON.stringify(todolist));
-
-          putOnPage();
-        });
-
-        $("input[type='submit']").on("click", function(event) {
-          event.preventDefault();
-
-          var val = $("input[type='text']").val();
-          $("input[type='text']").val("");
+      var employeeName = $("#employee-name-input").val().trim();
+      var startDate = $("#start-input").val().trim();
+      var rate = $("#rate-input").val().trim();
+      var role = $("#role-input").val().trim();
 
 
-          list.push(val);
-          localStorage.setItem("todolist", JSON.stringify(list));
+      var addEmployee = {
+        name: employeeName,
+        rate: rate,
+        start: startDate,
+        role: role
+      };
 
-          putOnPage();
-        });
+      database.ref().push(addEmployee);
+
+      console.log(newEmp.name);
+      console.log(newEmp.role);
+      console.log(newEmp.start);
+      console.log(newEmp.rate);
+
+      $("#employee-name-input").val("");
+      $("#start-input").val("");
+      $("#rate-input").val("");
+      $("#role-input").val("");
+    });
+
+    database.ref().on("child added", function(childSnapshot, prevChildKey) {
+
+      console.log(childSnapshot.val());
+
+      var employeeName = childSnapshot.val().name;
+      var start = childSnapshot.val().start;
+      var role = childSnapshot.val().role;
+      var rate = childSnapshot.val().rate;
+
+      log(employeeName);
+      log(start);
+      log(role);
+      log(rate);
+
+      var empStart = moment.unix(start).format("DD/MM/YYYY");
+
+      var months = moment().diff(moment.unix(start, "X"), "months");
+      console.log(months);
+
+    })
+
+    function log(input){
+      console.log(input)
+    }
     </script>
 
   </body>
