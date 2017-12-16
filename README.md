@@ -1,8 +1,6 @@
-# TimesheetProject
+# TimesheetProject 
 
-
-
-
+Marcus o.
 Created By:
 Erik McDaniel
 Collaborator Names:
