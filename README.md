@@ -1,11 +1,8 @@
 # TimesheetProject 
 
-Marcus o.
+
 Created By:
 Erik McDaniel
-Collaborator Names:
-
-
-
-Amy Lyne... name
+Amy Lyne
 Nate Worford
+Marcus o.
